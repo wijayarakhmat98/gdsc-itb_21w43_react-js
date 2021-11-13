@@ -1,0 +1,5 @@
+# Instructions
+
+Run
+
+	npm start

@@ -1,3 +1,12 @@
+.App {
+	margin: 2em;
+}
+
+input {
+	margin-right: 0.2em;
+	margin-left: 0.2em;
+}
+
 .cover {
 	display: flex;
 	flex-direction: column;
@@ -9,12 +18,6 @@
 }
 
 .search {
-	padding: 1em;
-}
-
-.search * {
-	margin-right: 0.2em;
-	margin-left: 0.2em;
 }
 
 .wrapper {
@@ -59,9 +62,13 @@
 }
 
 .details {
-	margin-right: 1em;
 	flex: 2;
 }
+
+.details .toolbar {
+	text-align: right;
+}
+
 .details .movie {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
@@ -87,10 +94,30 @@
 	margin-top: 1em;
 }
 
-.details .clear {
-	text-align: right;
-}
-
 .wishlist {
 	flex: 1;
+}
+
+.wishlist .view {
+	padding-top: 1em;
+}
+
+.wishlist .movie {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	margin-bottom: 1em;
+}
+
+.wishlist .movie .cover {
+	grid-column: 1;
+}
+
+.wishlist .movie .cover img {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.wishlist .movie .info {
+	grid-column: 2 / 5;
+	margin-left: 1em;
 }

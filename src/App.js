@@ -3,28 +3,53 @@ import React, {useState, useContext} from "react"
 import data from "./data.json"
 import Images from "./img.js"
 
+const catalog_context = React.createContext()
 const details_context = React.createContext()
 
 function Search() {
+	const [, setList] = useContext(catalog_context)
+	const [term, setTerm] = useState("")
+
+	const find = () => {
+		setList(data.filter((movie) => {
+			const text = term.toLowerCase()
+			const title = movie.title.toLowerCase()
+			return title.search(text) !== -1
+		}))
+	}
+
+	const clear = () => {
+		setTerm("")
+		setList(data)
+	}
+
 	return (
 		<div className="search">
-			<p>SEARCH</p>
+			<input type="text" value={term} onChange={(event) => {setTerm(event.target.value)}} />
+			<input type="button" value="Search" onClick={find} />
+			<input type="button" value="Clear" onClick={clear} />
 		</div>
 	)
 }
 
 function Catalog() {
+	const [list, ] = useContext(catalog_context)
 	const [, setInfo] = useContext(details_context)
+
+	const update = (name) => {
+		setInfo(data.find(movie => movie.title === name))
+	}
+
 	return (
 		<div className="catalog">
 			<p>CATALOG</p>
 			<div>
 			{
-				data.map((movie) => {
+				list.map((movie) => {
 					return (
 						<div className="movie" key={movie.title}>
 							<div className="cover">
-								<img src={Images[movie.cover]} alt={movie.alternative} onClick={() => {setInfo(data.find(i => i.title === movie.title))}} />
+								<img src={Images[movie.cover]} alt={movie.alternative} onClick={() => {update(movie.title)}} />
 							</div>
 							<div className="title">
 								<p><strong>{movie.title}</strong></p>
@@ -52,7 +77,7 @@ function Details() {
 			<div className="details">
 				<p>DETAILS</p>
 				<div className="clear">
-					<button onClick={() => {setInfo(null)}}>Clear</button>
+					<input type="button" value="Clear" onClick={() => {setInfo(null)}} />
 				</div>
 				<div>
 					<div className="movie">
@@ -90,17 +115,23 @@ function Wishlist() {
 }
 
 function App() {
+	const [list, setList] = useState(data)
 	const [info, setInfo] = useState(null)
   return (
 		<div>
+			<catalog_context.Provider value={[list, setList]}>
 			<details_context.Provider value={[info, setInfo]}>
+				<hr />
 				<Search />
+				<hr />
 				<div className="wrapper">
 					<Wishlist />
 					<Catalog />
 					<Details />
 				</div>
+				<hr />
 			</details_context.Provider>
+			</catalog_context.Provider>
 		</div>
 	)
 }

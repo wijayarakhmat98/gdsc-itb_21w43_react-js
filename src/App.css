@@ -9,6 +9,12 @@
 }
 
 .search {
+	padding: 1em;
+}
+
+.search * {
+	margin-right: 0.2em;
+	margin-left: 0.2em;
 }
 
 .wrapper {

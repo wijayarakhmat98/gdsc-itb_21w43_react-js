@@ -2,6 +2,7 @@
 
 Run
 
+	npm install
 	npm start
 
 # Previews
